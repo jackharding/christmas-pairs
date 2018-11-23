@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="371px" height="509.314px" viewBox="164 85.685 371 509.314" enable-background="new 164 85.685 371 509.314"
+	 xml:space="preserve">
+<g id="box">
+	<rect x="164" y="224" fill="#2F7DAD" width="371" height="371"/>
+</g>
+<g id="lid-left_1_">
+	<rect x="178" y="224" fill="#2F7DAD" width="171" height="12"/>
+</g>
+<g id="lid-right">
+	<rect x="349" y="224" fill="#2F7DAD" width="171" height="12"/>
+</g>
+<g id="bow-vertical">
+	<rect x="311" y="224" fill="#A31616" width="77" height="371"/>
+</g>
+<g id="bow-left">
+	<g>
+		<path fill="#A81E23" d="M335.552,183.978c0,0-34.958-109.372-144.453-97.373L178,103c0,0,116.5,0.5,145,106.5L335.552,183.978z"/>
+		<path fill="#A31616" d="M178.235,103.25c0,0-31.234,83.25,151.766,120.75v-25c0,0-132.5-38.5-129.5-95.75
+			C200.5,103.25,183.971,100,178.235,103.25z"/>
+	</g>
+</g>
+<g id="bow-right">
+	<g>
+		<path fill="#A81E23" d="M359.212,183.978c0,0,34.958-109.372,144.452-97.373l13.1,16.395c0,0-116.5,0.5-145,106.5L359.212,183.978
+			z"/>
+		<path fill="#A31616" d="M516.646,103.25c0,0,31.354,83.25-151.646,120.75v-25c0,0,132.44-38.5,129.44-95.75
+			C494.441,103.25,510.91,100,516.646,103.25z"/>
+	</g>
+</g>
+<g id="bow-center">
+	<circle fill="#94191C" cx="349.295" cy="206.396" r="26.295"/>
+</g>
+</svg>
