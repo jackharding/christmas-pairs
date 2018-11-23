@@ -62,12 +62,13 @@ class Item extends Component {
         });
 
         const t1 = new TimelineMax({
-            delay: .75,
+            delay: 1,
             onComplete: () => this.setState({ animateItem: true })
         });
 
         t1.set(item, {
-            zIndex: 1
+            zIndex: 1,
+            opacity: 1
         })
         .to(item, .5, {
             bottom: '79%'
@@ -104,22 +105,24 @@ const PresentWrap = styled.div`
     position: relative;
     display: flex;
     justify-content: center;
+    width: 100%;
     
     >svg {
         position: relative;
         z-index: 2;
+        width: 100%;
+        height: auto;
     }
     
     .present-item {
+        display: flex;
+        justify-content: center;
         position: absolute;
         left: 50%;
-        bottom: 5%;
+        bottom: 3%;
         transform: translateX(-50%);
-        width: 95%;
-        
-        svg {
-            width: 100%;
-        }
+        width: 100%;
+        opacity: 0;
     }
 `;
 

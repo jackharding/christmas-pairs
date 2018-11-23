@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import ReactTimeout from 'react-timeout';
 import _ from 'lodash';
 
-import Snowman from './components/Snowman';
 import Board from './components/Board';
 import Item from './components/Item';
-import { ReactComponent as Present } from './svg/present.svg';
+
+import Snowman from './components/Snowman';
+import Tree from './components/Tree';
 import { ReactComponent as CandyCane } from './svg/candy-cane.svg';
 import { ReactComponent as Misletoe } from './svg/misletoe.svg';
-import { ReactComponent as Tree } from './svg/tree.svg';
 
 const items = [
     {
@@ -16,17 +16,17 @@ const items = [
         component: Tree
     },
     {
-        value: 'candycane',
-        component: CandyCane
-    },
-    {
         value: 'snowman',
         component: Snowman
     },
-    {
-        value: 'misletoe',
-        component: Misletoe
-    },
+    // {
+    //     value: 'candycane',
+    //     component: CandyCane
+    // },
+    // {
+    //     value: 'misletoe',
+    //     component: Misletoe
+    // },
 ];
 
 const makeGameItems = (items, hard) => {
@@ -203,21 +203,16 @@ class App extends Component {
 
         return (
             <div className="App">
-                <Item Component={Snowman} />
                 { playing &&
                     <Board>
                         { this.state.items.map(item => {
-                            let { value, Component } = item;
 
                             return(
                                 <Item
                                     key={item}
                                     onClick={() => this.turnItem(item)}
                                     {...item}
-                                >
-                                    { value }
-                                    <Component />
-                                </Item>
+                                />
                             );
                         }) }
                     </Board>

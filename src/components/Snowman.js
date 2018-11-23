@@ -62,13 +62,8 @@ class Snowman extends Component {
     }
 
     render() {
-        let { className } = this.props;
-
         return(
-            <SnowmanWrap
-                ref={this.snowman}
-                className={className}
-            >
+            <SnowmanWrap ref={this.snowman}>
                 <SnowyLad />
             </SnowmanWrap>
         );
