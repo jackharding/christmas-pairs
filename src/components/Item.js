@@ -122,7 +122,6 @@ class Item extends Component {
 
         return(
             <Fragment>
-                <button onClick={this.test}>asd</button>
                 <PresentWrap ref={this.present}>
                     <Present onClick={this.props.onClick} />
 

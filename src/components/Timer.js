@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 
 const padSeconds = (int) => {
     if(int.toString().length === 2) return int;
@@ -7,5 +8,12 @@ const padSeconds = (int) => {
 }
 
 export default ({ minutes, seconds }) => (
-    <strong>{ minutes }:{ padSeconds(seconds) }</strong>
+    <Timer>{ minutes }:{ padSeconds(seconds) }</Timer>
 );
+
+const Timer = styled.strong`
+    display: block;
+    padding: 25px 0 50px;
+    text-align: center;
+    font-size: 36px;
+`;

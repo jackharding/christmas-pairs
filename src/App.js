@@ -1,15 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import ReactTimeout from 'react-timeout';
+import styled, { createGlobalStyle } from 'styled-components';
 import _ from 'lodash';
 
 import Board from './components/Board';
 import Item from './components/Item';
 import Timer from './components/Timer';
-
 import Snowman from './components/Snowman';
 import Tree from './components/Tree';
-import { ReactComponent as CandyCane } from './svg/candy-cane.svg';
-import { ReactComponent as Misletoe } from './svg/misletoe.svg';
+
+import global from './styles/global';
+import { create } from 'domain';
+
+const Styles = createGlobalStyle(global);
 
 const items = [
     {
@@ -213,26 +216,42 @@ class App extends Component {
 
         return (
             <div className="App">
-                <Timer {...time} />
-
-                { playing &&
-                    <Board>
-                        { this.state.items.map(item => {
-                            return(
-                                <Item
-                                    {...item}
-                                    onClick={() => this.turnItem(item)}
-                                    key={item.uid}
-                                />
-                            );
-                        }) }
-                    </Board>
+                { playing ?
+                    <Fragment>
+                        <Timer {...time} />
+                            <Board>
+                                { this.state.items.map(item => {
+                                    return(
+                                        <Item
+                                            {...item}
+                                            onClick={() => this.turnItem(item)}
+                                            key={item.uid}
+                                        />
+                                    );
+                                }) }
+                            </Board>
+                    </Fragment>
+                    : 
+                    <StartBtn onClick={this.startGame}>Play</StartBtn>
                 }
 
-                <button onClick={this.startGame}>start it</button>
+                <Styles />
             </div>
         );
     }
 }
+
+const StartBtn = styled.button`
+    position: relative;
+    display: table;
+    margin: 0 auto;
+    padding: 12px 24px;
+    top: 75px;
+    border: 0;
+    background: #78adf2;
+    color: #efefef;
+    font-size: 20px;
+    cursor: pointer;
+`;
 
 export default ReactTimeout(App);
