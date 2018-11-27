@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { TweenMax, TimelineMax } from "gsap/TweenMax";
+import { TweenMax, TimelineLite } from "gsap/TweenMax";
 import styled from 'styled-components';
 
 import { ReactComponent as Present } from '../svg/present.svg';
@@ -11,30 +11,37 @@ class Item extends Component {
         this.present = React.createRef();
         this.item = React.createRef();
 
+        this.presentTimeline = new TimelineLite({ paused: true });
+        this.itemTimeline = new TimelineLite({
+            paused: true,
+            onComplete: () => this.setState({ animateItem: true })
+        });
+
         this.state = {
-            animateItem: false,
             open: false,
+            animateItem: false,
+            timelinesSet: false,
+            itemPicked: null
         }
     }
 
     componentDidUpdate(prevProps) {
+        // console.log(prevProps, this.props)
         if(!prevProps.active && this.props.active) {
-            this.openPresent();
+            this.openPresent(this.props.uid);
         }
 
-        // if(prevProps.active && !this.props.active) {
-        //     this.openPresent(true);
-        // }
+        if(prevProps.active && !this.props.active) {
+            // console.log('CLOSEIT!!')
+            this.openPresent(this.props.uid, true);
+        }
+
+        if(this.present.current && this.item.current && !this.state.timelinesSet) {
+            this.setTimelines();
+        }
     }
 
-    openPresent = (reverse) => {
-        // if(this.props.active) return;
-
-        this.setState({
-            animateItem: false,
-            open: true,
-        });
-
+    setTimelines = () => {
         let bowLeft = this.present.current.querySelector('#bow-left'),
             bowRight = this.present.current.querySelector('#bow-right'),
             bowCenter = this.present.current.querySelector('#bow-center'),
@@ -42,41 +49,36 @@ class Item extends Component {
             lidRight = this.present.current.querySelector('#lid-right'),
             item = this.item.current;
 
-        TweenMax.to(bowLeft, .4, {
+        this.presentTimeline.to(bowLeft, .4, {
             scaleX: 0,
             scaleY: 0,
             transformOrigin:"right bottom"
-        });
-        TweenMax.to(bowRight, .4, {
+        }, 0)
+        .to(bowRight, .4, {
             scaleX: 0,
             scaleY: 0,
             transformOrigin:"left bottom"
-        })
-        TweenMax.to(bowCenter, .2, {
+        }, 0)
+        .to(bowCenter, .2, {
             scale: .3,
             transformOrigin: "center bottom"
-        });
-        TweenMax.to(bowCenter, .4, {
+        }, .2)
+        .to(bowCenter, .4, {
             opacity: 0,
             delay: .2
-        });
-        TweenMax.to(lidLeft, .3, {
+        }, 0)
+        .to(lidLeft, .3, {
             delay: .3,
             rotation: -230,
             transformOrigin: "left center"
-        });
-        TweenMax.to(lidRight, .3, {
+        }, .3)
+        .to(lidRight, .3, {
             delay: .3,
             rotation: 230,
             transformOrigin:"right center"
-        });
+        }, .3);
 
-        const t1 = new TimelineMax({
-            delay: 1,
-            onComplete: () => this.setState({ animateItem: true })
-        });
-
-        t1.set(item, {
+        this.itemTimeline.set(item, {
             zIndex: 1,
             opacity: 1
         })
@@ -89,6 +91,30 @@ class Item extends Component {
         .to(item, .5, {
             bottom: '2%'
         });
+
+        this.setState({
+            timelinesSet: true
+        });
+    }
+
+    openPresent = (uid, reverse) => {
+        this.setState(prev => ({
+            animateItem: !prev.animateItem,
+            open: !prev.open,
+        }));
+
+        // TODO: Why isn't reverse delay working?
+        if(reverse) {
+            this.itemTimeline.reverse();
+            TweenMax.delayedCall(1, () => this.presentTimeline.reverse())
+        } else {
+            this.presentTimeline.play();
+            this.itemTimeline.delay(1).play();
+        }
+    }
+
+    test = () => {
+        this.openPresent(null, this.state.open);
     }
 
     render() {
@@ -96,6 +122,7 @@ class Item extends Component {
 
         return(
             <Fragment>
+                <button onClick={this.test}>asd</button>
                 <PresentWrap ref={this.present}>
                     <Present onClick={this.props.onClick} />
 

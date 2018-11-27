@@ -4,6 +4,7 @@ import _ from 'lodash';
 
 import Board from './components/Board';
 import Item from './components/Item';
+import Timer from './components/Timer';
 
 import Snowman from './components/Snowman';
 import Tree from './components/Tree';
@@ -31,7 +32,7 @@ const items = [
 
 const makeGameItems = (items, hard) => {
     items = items.map(item => ({
-        key: item.value,
+        uid: item.value,
         value: item.value,
         Component: item.component,
         active: false,
@@ -40,7 +41,7 @@ const makeGameItems = (items, hard) => {
 
     items = [...items, ...items.map(item => ({
         ...item,
-        key: item.key + 'pair'
+        uid: item.uid + 'pair'
     }))];
 
 
@@ -56,7 +57,7 @@ const makeGameItems = (items, hard) => {
                 ...item,
                 controls:  {
                     value: randomItem[0].value,
-                    key: randomItem[0].key,
+                    uid: randomItem[0].uid,
                 },
             };
         });
@@ -74,6 +75,7 @@ class App extends Component {
             playing: false,
             items: [],
             guesses: [],
+            timer: null,
             time: {
                 minutes: 0,
                 seconds: 0,
@@ -91,27 +93,31 @@ class App extends Component {
     }
 
     startTimer = () => {
-        this.props.setTimeout(this.addSecond, 10);
+        this.setState({
+            timer: this.props.setInterval(() => this.addSecond(), 1000)
+        });
     }
 
     stopTimer = () => {
-        this.props.clearTimeout(this.addSecond);
+        this.props.clearInterval(this.state.timer);
     }
 
     addSecond = () => {
         this.setState(prev => {
             let addMinute = prev.time.seconds === 59;
 
-            let obj = {
+            let time = {
                 ...prev.time,
                 seconds: addMinute ? 0 : prev.time.seconds + 1,
             }
 
             if(addMinute) {
-                obj.minutes = prev.time.minutes + 1;
+                time.minutes = prev.time.minutes + 1;
             }
 
-            return obj;
+            return {
+                time
+            };
         });
     }
     
@@ -121,17 +127,18 @@ class App extends Component {
         }
     }
 
-    compareItems = (a, b, key) => {
+    compareItems = (a, b, uid) => {
         if(this.state.hard) {
-            return a.controls[key] === b[key];
+            return a.controls[uid] === b[uid];
         } else {
-            return a[key] === b[key];
+            return a[uid] === b[uid];
         }
     }
 
     checkForMatch = (guesses) => {
         let items;
 
+        console.log('GYESS', guesses)
         // If the first/second items are a match, set removed key to true
         if(guesses[0] === guesses[1]) {
             items = this.state.items.map(item => {
@@ -183,9 +190,9 @@ class App extends Component {
                     ...item
                 }
 
-                let matchesGuess = guess.key === item.key;
+                let matchesGuess = guess.uid === item.uid;
                 if(hard) {
-                    matchesGuess = guess.controls.key === item.key;
+                    matchesGuess = guess.controls.uid === item.uid;
                 }
 
                 if(matchesGuess) {
@@ -199,18 +206,23 @@ class App extends Component {
     }
 
     render() {
-        let { playing } = this.state;
+        let {
+            playing,
+            time
+        } = this.state;
 
         return (
             <div className="App">
+                <Timer {...time} />
+
                 { playing &&
                     <Board>
                         { this.state.items.map(item => {
                             return(
                                 <Item
-                                    key={item}
-                                    onClick={() => this.turnItem(item)}
                                     {...item}
+                                    onClick={() => this.turnItem(item)}
+                                    key={item.uid}
                                 />
                             );
                         }) }
