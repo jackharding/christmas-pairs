@@ -17,8 +17,18 @@ class Item extends Component {
         }
     }
 
-    openPresent = () => {
-        if(this.state.open) return;
+    componentDidUpdate(prevProps) {
+        if(!prevProps.active && this.props.active) {
+            this.openPresent();
+        }
+
+        // if(prevProps.active && !this.props.active) {
+        //     this.openPresent(true);
+        // }
+    }
+
+    openPresent = (reverse) => {
+        // if(this.props.active) return;
 
         this.setState({
             animateItem: false,
@@ -77,7 +87,7 @@ class Item extends Component {
             zIndex: 3
         })
         .to(item, .5, {
-            bottom: '3%'
+            bottom: '2%'
         });
     }
 
@@ -87,7 +97,7 @@ class Item extends Component {
         return(
             <Fragment>
                 <PresentWrap ref={this.present}>
-                    <Present onClick={this.openPresent} />
+                    <Present onClick={this.props.onClick} />
 
                     <div
                         className="present-item"
@@ -104,6 +114,7 @@ class Item extends Component {
 const PresentWrap = styled.div`
     position: relative;
     display: flex;
+    align-items: center;
     justify-content: center;
     width: 100%;
     
@@ -122,7 +133,18 @@ const PresentWrap = styled.div`
         bottom: 3%;
         transform: translateX(-50%);
         width: 100%;
+        height: 71%;
         opacity: 0;
+        
+        >div {
+            width: 60%;
+            
+            svg {
+                width: 100%;
+                height: auto;
+                max-height: 100%;
+            }
+        }
     }
 `;
 

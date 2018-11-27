@@ -206,7 +206,6 @@ class App extends Component {
                 { playing &&
                     <Board>
                         { this.state.items.map(item => {
-
                             return(
                                 <Item
                                     key={item}
