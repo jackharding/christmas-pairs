@@ -8,6 +8,7 @@ import Item from './components/Item';
 import Timer from './components/Timer';
 import Snowman from './components/Snowman';
 import Tree from './components/Tree';
+import DifficultySwitch from './components/DifficultySwitch';
 
 import global from './styles/global';
 import { create } from 'domain';
@@ -130,18 +131,15 @@ class App extends Component {
         }
     }
 
-    compareItems = (a, b, uid) => {
-        if(this.state.hard) {
-            return a.controls[uid] === b[uid];
-        } else {
-            return a[uid] === b[uid];
-        }
+    changeDifficulty = (hard) => {
+        this.setState({
+            hard
+        });
     }
 
     checkForMatch = (guesses) => {
         let items;
 
-        console.log('GYESS', guesses)
         // If the first/second items are a match, set removed key to true
         if(guesses[0] === guesses[1]) {
             items = this.state.items.map(item => {
@@ -211,7 +209,8 @@ class App extends Component {
     render() {
         let {
             playing,
-            time
+            time,
+            hard,
         } = this.state;
 
         return (
@@ -219,20 +218,26 @@ class App extends Component {
                 { playing ?
                     <Fragment>
                         <Timer {...time} />
-                            <Board>
-                                { this.state.items.map(item => {
-                                    return(
-                                        <Item
-                                            {...item}
-                                            onClick={() => this.turnItem(item)}
-                                            key={item.uid}
-                                        />
-                                    );
-                                }) }
-                            </Board>
+                        <Board>
+                            { this.state.items.map(item => {
+                                return(
+                                    <Item
+                                        {...item}
+                                        onClick={() => this.turnItem(item)}
+                                        key={item.uid}
+                                    />
+                                );
+                            }) }
+                        </Board>
                     </Fragment>
-                    : 
-                    <StartBtn onClick={this.startGame}>Play</StartBtn>
+                    :
+                    <Fragment>
+                        <StartBtn onClick={this.startGame}>Play</StartBtn>
+                        <DifficultySwitch
+                            hard={hard}
+                            onChange={this.changeDifficulty}
+                        />
+                    </Fragment>
                 }
 
                 <Styles />

@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { TweenMax, TimelineLite } from "gsap/TweenMax";
 import styled from 'styled-components';
+import ReactTimeout from 'react-timeout';
 
 import { ReactComponent as Present } from '../svg/present.svg';
 
@@ -21,7 +22,8 @@ class Item extends Component {
             open: false,
             animateItem: false,
             timelinesSet: false,
-            itemPicked: null
+            itemPicked: null,
+            removed: false,
         }
     }
 
@@ -32,8 +34,13 @@ class Item extends Component {
         }
 
         if(prevProps.active && !this.props.active) {
-            // console.log('CLOSEIT!!')
-            this.openPresent(this.props.uid, true);
+            this.props.setTimeout(() => this.openPresent(this.props.uid, true), 1900);
+        }
+
+        if(!prevProps.removed && this.props.removed) {
+            this.props.setTimeout(() => this.setState({
+                removed: true
+            }), 1900);
         }
 
         if(this.present.current && this.item.current && !this.state.timelinesSet) {
@@ -122,7 +129,10 @@ class Item extends Component {
 
         return(
             <Fragment>
-                <PresentWrap ref={this.present}>
+                <PresentWrap
+                    ref={this.present}
+                    removed={this.state.removed}
+                >
                     <Present onClick={this.props.onClick} />
 
                     <div
@@ -143,6 +153,8 @@ const PresentWrap = styled.div`
     align-items: center;
     justify-content: center;
     width: 100%;
+    transition: opacity .3s;
+    opacity: ${({ removed }) => removed ? 0 : 1};
     
     >svg {
         position: relative;
@@ -174,4 +186,4 @@ const PresentWrap = styled.div`
     }
 `;
 
-export default Item;
+export default ReactTimeout(Item);
