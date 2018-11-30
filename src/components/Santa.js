@@ -16,11 +16,15 @@ class SantaWrap extends Component {
 
     componentDidUpdate() {
         if(this.props.animate && !this.state.animating) {
-            // this.wave();
+            this.animate();
         }
     }
 
-    wave = () => {
+    animate = () => {
+        this.setState({
+            animating: true
+        });
+
         let leftArm = this.santa.current.querySelector('#left-arm'),
             rightArm = this.santa.current.querySelector('#right-arm');
 
@@ -32,31 +36,25 @@ class SantaWrap extends Component {
         });
 
         t1.set(rightArm, {
-            rotation: 4,
-            transformOrigin: 'right bottom'
+            rotation: -5,
+            transformOrigin: 'right top'
         })
             .to(rightArm, .5, {
-                rotation: 4,
+                rotation: -10,
             })
             .to(rightArm, .5, {
-                rotation: -4,
-            })
-            .to(rightArm, .5, {
-                rotation: 4,
+                rotation: -5,
             });
 
         t2.set(leftArm, {
-            rotation: 4,
-            transformOrigin: 'left bottom'
+            rotation: 5,
+            transformOrigin: 'left top'
         })
             .to(leftArm, .5, {
-                rotation: 4,
+                rotation: 10,
             })
             .to(leftArm, .5, {
-                rotation: -4,
-            })
-            .to(leftArm, .5, {
-                rotation: 4,
+                rotation: 5,
             });
     }
 

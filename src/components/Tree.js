@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { TweenMax, TimelineMax } from "gsap/TweenMax";
-import styled from 'styled-components';
+import { TweenMax } from "gsap/TweenMax";
 
 import { ReactComponent as Tree } from '../svg/tree.svg';
 
@@ -16,62 +15,34 @@ class TreeContainer extends Component {
     }
 
     componentDidUpdate() {
-        // if(this.props.animate && !this.state.animating) {
-        //     this.wave();
-        // }
+        if(this.props.animate && !this.state.animating) {
+            this.animate();
+        }
     }
 
-    wave = () => {
-        let leftArm = this.snowman.current.querySelector('#left-arm'),
-            rightArm = this.snowman.current.querySelector('#right-arm');
-
-        const t1 = new TimelineMax({
-            repeat: -1,
+    animate = () => {
+        this.setState({
+            animating: true
         });
-        const t2 = new TimelineMax({
+
+        const circles = this.tree.current.querySelectorAll('#baubles circle');
+
+        TweenMax.staggerFromTo(circles, .2, {
+            opacity: 1
+        }, {
+            opacity: .7,
+            yoyo: true,
             repeat: -1
-        });
-
-        t1.set(rightArm, {
-            rotation: 4,
-            transformOrigin: 'right bottom'
-        })
-            .to(rightArm, .5, {
-                rotation: 4,
-            })
-            .to(rightArm, .5, {
-                rotation: -4,
-            })
-            .to(rightArm, .5, {
-                rotation: 4,
-            });
-
-        t2.set(leftArm, {
-            rotation: 4,
-            transformOrigin: 'left bottom'
-        })
-            .to(leftArm, .5, {
-                rotation: 4,
-            })
-            .to(leftArm, .5, {
-                rotation: -4,
-            })
-            .to(leftArm, .5, {
-                rotation: 4,
-            });
+        }, .1)
     }
 
     render() {
         return(
-            <TreeWrap ref={this.tree}>
+            <div ref={this.tree}>
                 <Tree />
-            </TreeWrap>
+            </div>
         );
     }
 }
-
-const TreeWrap = styled.div`
-    
-`;
 
 export default React.forwardRef((props, ref) => <TreeContainer ref={ref} {...props} />);

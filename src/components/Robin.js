@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TimelineMax } from "gsap/TweenMax";
+import { TimelineMax } from "gsap/all";
 
 import { ReactComponent as Robin } from '../svg/robin.svg';
 
@@ -16,48 +16,41 @@ class RobinWrap extends Component {
 
     componentDidUpdate() {
         if(this.props.animate && !this.state.animating) {
-            // this.wave();
+            this.animate();
         }
     }
 
-    wave = () => {
-        let leftArm = this.robin.current.querySelector('#left-arm'),
-            rightArm = this.robin.current.querySelector('#right-arm');
+    animate = () => {
+        this.setState({
+            animating: true
+        });
 
-        const t1 = new TimelineMax({
+        let pupil = this.robin.current.querySelector('#pupil'),
+            wing = this.robin.current.querySelector('#wing');
+
+        const eyeTimeline = new TimelineMax({
             repeat: -1,
-        });
-        const t2 = new TimelineMax({
-            repeat: -1
+            repeatDelay: 4
         });
 
-        t1.set(rightArm, {
-            rotation: 4,
-            transformOrigin: 'right bottom'
-        })
-            .to(rightArm, .5, {
-                rotation: 4,
-            })
-            .to(rightArm, .5, {
-                rotation: -4,
-            })
-            .to(rightArm, .5, {
-                rotation: 4,
-            });
+        const wingTimeline = new TimelineMax({
+            repeat: -1,
+            repeatDelay: 3
+        });
 
-        t2.set(leftArm, {
-            rotation: 4,
-            transformOrigin: 'left bottom'
-        })
-            .to(leftArm, .5, {
-                rotation: 4,
-            })
-            .to(leftArm, .5, {
-                rotation: -4,
-            })
-            .to(leftArm, .5, {
-                rotation: 4,
-            });
+        eyeTimeline.to(pupil, 1, {
+            rotation: -30,
+            repeat: -1,
+            repeatDelay: 3,
+            yoyo: true,
+        });
+
+        wingTimeline.to(wing, .1, {
+            transformOrigin: 'top right',
+            rotation: -4,
+            yoyo: true,
+            repeat: 3
+        });
     }
 
     render() {

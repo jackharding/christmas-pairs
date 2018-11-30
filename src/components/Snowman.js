@@ -22,6 +22,10 @@ class Snowman extends Component {
     }
 
     wave = () => {
+        this.setState({
+            animating: true
+        });
+
         let leftArm = this.snowman.current.querySelector('#left-arm'),
             rightArm = this.snowman.current.querySelector('#right-arm');
 

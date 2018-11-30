@@ -25,7 +25,7 @@ export default ({ hard, onChange }) => (
 );
 
 const Outer = styled.div`
-    margin-top: 50px;
+    margin-top: 25px;
     
     h3 {
         display: none;
@@ -37,7 +37,7 @@ const Outer = styled.div`
 `;
 
 const Inner = styled.nav`
-    width: 140px;
+    width: 100px;
     display: flex;
     
     >label {
@@ -48,6 +48,7 @@ const Inner = styled.nav`
         border: 2px solid #00ABD6;
         color: #00ABD6;
         text-align: center;
+        font-size: 14px;
     
         &:first-of-type {
             border-top-left-radius: 25px;

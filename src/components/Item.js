@@ -12,7 +12,15 @@ class Item extends Component {
         this.present = React.createRef();
         this.item = React.createRef();
 
-        this.presentTimeline = new TimelineLite({ paused: true });
+        this.presentTimeline = new TimelineLite({
+            paused: true,
+            onStart: () => this.setState({ opening: true }),
+            onComplete: () => this.setState({
+                opening: false,
+                closing: true,
+            }),
+            onReverseComplete: () => this.setState({ closing: false }),
+        });
         this.itemTimeline = new TimelineLite({
             paused: true,
             onComplete: () => this.setState({ animateItem: true })
@@ -20,6 +28,8 @@ class Item extends Component {
 
         this.state = {
             open: false,
+            opening: false,
+            closing: false,
             animateItem: false,
             timelinesSet: false,
             itemPicked: null,
@@ -28,7 +38,6 @@ class Item extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        // console.log(prevProps, this.props)
         if(!prevProps.active && this.props.active) {
             this.openPresent(this.props.uid);
         }
@@ -46,6 +55,10 @@ class Item extends Component {
         if(this.present.current && this.item.current && !this.state.timelinesSet) {
             this.setTimelines();
         }
+    }
+
+    componentWillUnmount() {
+
     }
 
     setTimelines = () => {
@@ -110,7 +123,6 @@ class Item extends Component {
             open: !prev.open,
         }));
 
-        // TODO: Why isn't reverse delay working?
         if(reverse) {
             this.itemTimeline.reverse();
             TweenMax.delayedCall(1, () => this.presentTimeline.reverse())
@@ -120,20 +132,23 @@ class Item extends Component {
         }
     }
 
-    test = () => {
-        this.openPresent(null, this.state.open);
-    }
-
     render() {
-        let { Component } = this.props;
+        let {
+            Component,
+            onClick
+        } = this.props;
+        console.log(this.props.uid, this.state.open, this.state.opening)
 
         return(
             <Fragment>
                 <PresentWrap
                     ref={this.present}
                     removed={this.state.removed}
+                    open={this.state.open}
+                    opening={this.state.opening}
+                    closing={this.state.closing}
                 >
-                    <Present onClick={this.props.onClick} />
+                    <Present onClick={onClick} />
 
                     <div
                         className="present-item"
@@ -155,6 +170,11 @@ const PresentWrap = styled.div`
     width: 100%;
     transition: opacity .3s;
     opacity: ${({ removed }) => removed ? 0 : 1};
+    cursor: pointer;
+    
+    &:hover {
+        animation: ${({ open, opening, closing }) => open || opening || closing ? 'none' : 'shake .1s infinite'};
+    }
     
     >svg {
         position: relative;
@@ -182,6 +202,24 @@ const PresentWrap = styled.div`
                 height: auto;
                 max-height: 100%;
             }
+        }
+    }
+    
+    @keyframes shake {
+        0% {
+            transform: rotate(0deg);
+        }
+        25% {
+            transform: rotate(5deg);
+        }
+        50% {
+            transform: rotate(0deg);
+        }
+        75% {
+            transform: rotate(-5deg);
+        }
+        100% {
+            transform: rotate(0deg);
         }
     }
 `;

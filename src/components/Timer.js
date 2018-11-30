@@ -7,13 +7,14 @@ const padSeconds = (int) => {
     return "0" + int;
 }
 
-export default ({ minutes, seconds }) => (
-    <Timer>{ minutes }:{ padSeconds(seconds) }</Timer>
+export default ({ minutes, seconds, completed }) => (
+    <Timer completed={completed}>{ minutes }:{ padSeconds(seconds) }</Timer>
 );
 
 const Timer = styled.strong`
     display: block;
-    padding: 25px 0 50px;
     text-align: center;
-    font-size: 36px;
+    font-size: ${({ completed }) => completed ? '64px' : '36px'};
+    margin-top: ${({ completed }) => completed ? '250px' : '0'};
+    color: #333;
 `;

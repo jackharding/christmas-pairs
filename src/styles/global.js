@@ -13,4 +13,10 @@ export default css`
         margin: 0;
         font-family: 'Noto Sans TC', sans-serif;
     }
+    
+    button {
+        &:focus {
+            outline: 0;
+        }
+    }
 `;
