@@ -6,16 +6,46 @@ import _ from 'lodash';
 import Board from './components/Board';
 import Item from './components/Item';
 import Timer from './components/Timer';
-import Snowman from './components/Snowman';
-import Tree from './components/Tree';
 import DifficultySwitch from './components/DifficultySwitch';
 
+import CandyCane from './components/CandyCane';
+import GingerbreadMan from './components/GingerbreadMan';
+import Mistletoe from './components/Mistletoe';
+import Robin from './components/Robin';
+import Santa from './components/Santa';
+import Snowflake from './components/Snowflake';
+import Snowman from './components/Snowman';
+import Tree from './components/Tree';
+
 import global from './styles/global';
-import { create } from 'domain';
 
 const Styles = createGlobalStyle(global);
 
 const items = [
+    {
+        value: 'candyCane',
+        component: CandyCane
+    },
+    {
+        value: 'gingerbread-man',
+        component: GingerbreadMan
+    },
+    {
+        value: 'mistletoe',
+        component: Mistletoe
+    },
+    {
+        value: 'robin',
+        component: Robin
+    },
+    {
+        value: 'santa',
+        component: Santa
+    },
+    {
+        value: 'snowflake',
+        component: Snowflake
+    },
     {
         value: 'tree',
         component: Tree
@@ -24,14 +54,6 @@ const items = [
         value: 'snowman',
         component: Snowman
     },
-    // {
-    //     value: 'candycane',
-    //     component: CandyCane
-    // },
-    // {
-    //     value: 'misletoe',
-    //     component: Misletoe
-    // },
 ];
 
 const makeGameItems = (items, hard) => {
@@ -231,13 +253,16 @@ class App extends Component {
                         </Board>
                     </Fragment>
                     :
-                    <Fragment>
-                        <StartBtn onClick={this.startGame}>Play</StartBtn>
-                        <DifficultySwitch
-                            hard={hard}
-                            onChange={this.changeDifficulty}
-                        />
-                    </Fragment>
+                    <StartScreen>
+                        <h1>Christmas Pairs</h1>
+                        <Controls>
+                            <StartBtn onClick={this.startGame}>Play</StartBtn>
+                            <DifficultySwitch
+                                hard={hard}
+                                onChange={this.changeDifficulty}
+                            />
+                        </Controls>
+                    </StartScreen>
                 }
 
                 <Styles />
@@ -246,17 +271,40 @@ class App extends Component {
     }
 }
 
-const StartBtn = styled.button`
+const StartScreen = styled.div`
+    padding-top: 125px;
+
+    h1 {
+        margin: 0 auto 75px;
+        font-size: 84px;
+        line-height: 110%;
+        text-transform: uppercase;
+        text-align: center;
+        max-width: 600px;
+        color: #333;
+    }
+`;
+
+const Controls = styled.div`
     position: relative;
-    display: table;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 200px;
     margin: 0 auto;
-    padding: 12px 24px;
-    top: 75px;
+`;
+
+const StartBtn = styled.button`
+    width: 100%;
+    padding: 16px 24px;
     border: 0;
-    background: #78adf2;
+    background: #AFCEA5;
     color: #efefef;
-    font-size: 20px;
+    font-size: 32px;
     cursor: pointer;
+    text-transform: uppercase;
+    font-weight: 700;
+    border-radius: 15px;
 `;
 
 export default ReactTimeout(App);

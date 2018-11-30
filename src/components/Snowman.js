@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TweenMax, TimelineMax } from "gsap/TweenMax";
+import { TimelineMax } from "gsap/TweenMax";
 import styled from 'styled-components';
 
 import { ReactComponent as SnowyLad } from '../svg/snowman.svg';
@@ -63,15 +63,11 @@ class Snowman extends Component {
 
     render() {
         return(
-            <SnowmanWrap ref={this.snowman}>
+            <div ref={this.snowman}>
                 <SnowyLad />
-            </SnowmanWrap>
+            </div>
         );
     }
 }
-
-const SnowmanWrap = styled.div`
-    
-`;
 
 export default React.forwardRef((props, ref) => <Snowman ref={ref} {...props} />);
