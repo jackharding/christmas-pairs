@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import Timer from './Timer';
 import Quit from './Quit';
 
+import { padSeconds } from '../helpers';
+
 class TopBar extends Component {
     state = {
         timer: null,
@@ -20,6 +22,18 @@ class TopBar extends Component {
 
     componentWillUnmount() {
         this.props.clearInterval(this.state.timer);
+    }
+
+    componentDidUpdate(prevProps) {
+        if(!prevProps.completed && this.props.completed) {
+            this.setState({
+                timer: null
+            });
+
+            this.props.setTimeout(() => {
+                this.props.onStop(this.state.time.minutes + ':' + padSeconds(this.state.time.seconds));
+            }, 1500);
+        }
     }
 
     startTimer = () => {

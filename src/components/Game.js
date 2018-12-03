@@ -13,19 +13,7 @@ import Snowflake from './Snowflake';
 import Snowman from './Snowman';
 import Tree from './Tree';
 
-function chunkArray(myArray, chunk_size){
-    var index = 0;
-    var arrayLength = myArray.length;
-    var tempArray = [];
-
-    for (index = 0; index < arrayLength; index += chunk_size) {
-        let myChunk = myArray.slice(index, index+chunk_size);
-        // Do something if you want with the group
-        tempArray.push(myChunk);
-    }
-
-    return tempArray;
-}
+import { chunkArray } from '../helpers';
 
 const gifts = [
     {
@@ -36,30 +24,30 @@ const gifts = [
         value: 'gingerbreadMan',
         component: GingerbreadMan
     },
-    // {
-    //     value: 'mistletoe',
-    //     component: Mistletoe
-    // },
-    // {
-    //     value: 'robin',
-    //     component: Robin
-    // },
-    // {
-    //     value: 'santa',
-    //     component: Santa
-    // },
-    // {
-    //     value: 'snowflake',
-    //     component: Snowflake
-    // },
-    // {
-    //     value: 'tree',
-    //     component: Tree
-    // },
-    // {
-    //     value: 'snowman',
-    //     component: Snowman
-    // },
+    {
+        value: 'mistletoe',
+        component: Mistletoe
+    },
+    {
+        value: 'robin',
+        component: Robin
+    },
+    {
+        value: 'santa',
+        component: Santa
+    },
+    {
+        value: 'snowflake',
+        component: Snowflake
+    },
+    {
+        value: 'tree',
+        component: Tree
+    },
+    {
+        value: 'snowman',
+        component: Snowman
+    },
 ]
 
 const makeGameItems = (items, hard) => {
@@ -110,7 +98,7 @@ class Game extends Component {
     state = {
         items: {},
         guesses: [],
-        remaining: 0
+        remaining: null
     }
 
     componentDidMount() {
@@ -126,18 +114,17 @@ class Game extends Component {
             this.checkForMatches(this.state.guesses);
         }
 
-        if(this.state.remaining < 1) {
+        if(prevState.remaining !== 0 && this.state.remaining === 0) {
             this.props.onComplete();
         }
     }
 
     setItems = (reset) => {
         const items = reset ? [] : makeGameItems(gifts, this.props.hard);
-        // console.log(items);
 
         this.setState({
             items,
-            remaining: items.length,
+            remaining: Object.keys(items).length / 2,
         });
     }
 
@@ -193,22 +180,6 @@ class Game extends Component {
 
         // Set active key to true and add guess to end of guesses array
         this.setState({
-            // items: this.state.items.map(item => {
-            //     let obj = {
-            //         ...item
-            //     }
-            //
-            //     let matchesGuess = guess.uid === item.uid;
-            //     if(hard) {
-            //         matchesGuess = guess.controls.uid === item.uid;
-            //     }
-            //
-            //     if(matchesGuess) {
-            //         obj.active = true;
-            //     }
-            //
-            //     return obj;
-            // }),
             items,
             guesses: [...this.state.guesses, value]
         });

@@ -23,7 +23,7 @@ export default styled.div`
         }
     }
     
-    //@media (max-width: 599px) {
-    //    grid-template-columns: repeat(2, 1fr);
-    //}
+    @media (max-width: 599px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
 `;

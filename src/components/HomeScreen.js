@@ -1,18 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import DifficultySwitch from './DifficultySwitch';
+// import DifficultySwitch from './DifficultySwitch';
 
-export default ({ onStart, onDifficultyChange, hard }) => (
+export default ({ onStart, onDifficultyChange, hard, finalTime }) => (
     <StartScreen>
+        { finalTime && <Score>You finished in { finalTime }</Score> }
         <h1>Xmas Pairs</h1>
 
         <Controls>
             <StartBtn onClick={onStart}>Play</StartBtn>
-            <DifficultySwitch
-                hard={hard}
-                onChange={onDifficultyChange}
-            />
+            {/*<DifficultySwitch*/}
+                {/*hard={hard}*/}
+                {/*onChange={onDifficultyChange}*/}
+            {/*/>*/}
         </Controls>
     </StartScreen>
 );
@@ -57,4 +58,13 @@ const StartBtn = styled.button`
     &:hover {
         background: #5fbf17;
     }
+`;
+
+const Score = styled.p`
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 32px;
+    margin: 0;
 `;

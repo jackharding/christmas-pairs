@@ -1,11 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const padSeconds = (int) => {
-    if(int.toString().length === 2) return int;
-
-    return "0" + int;
-}
+import { padSeconds } from '../helpers';
 
 export default ({ minutes, seconds, completed }) => (
     <Timer completed={completed}>{ minutes }:{ padSeconds(seconds) }</Timer>

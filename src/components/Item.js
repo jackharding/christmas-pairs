@@ -47,9 +47,9 @@ class Item extends Component {
         }
 
         if(!prevProps.removed && this.props.removed) {
-            this.props.setTimeout(() => this.setState({
+            this.setState({
                 removed: true
-            }), 1900);
+            });
         }
 
         if(this.present.current && this.item.current && !this.state.timelinesSet) {
@@ -58,7 +58,7 @@ class Item extends Component {
     }
 
     componentWillUnmount() {
-
+        this.props.clearTimeout(this.removeItem);
     }
 
     setTimelines = () => {
@@ -72,12 +72,12 @@ class Item extends Component {
         this.presentTimeline.to(bowLeft, .4, {
             scaleX: 0,
             scaleY: 0,
-            transformOrigin:"right bottom"
+            transformOrigin: "right bottom"
         }, 0)
         .to(bowRight, .4, {
             scaleX: 0,
             scaleY: 0,
-            transformOrigin:"left bottom"
+            transformOrigin: "left bottom"
         }, 0)
         .to(bowCenter, .2, {
             scale: .3,
@@ -95,7 +95,7 @@ class Item extends Component {
         .to(lidRight, .3, {
             delay: .3,
             rotation: 230,
-            transformOrigin:"right center"
+            transformOrigin: "right center"
         }, .3);
 
         this.itemTimeline.set(item, {
@@ -172,6 +172,7 @@ const PresentWrap = styled.div`
     width: 100%;
     transition: opacity .3s;
     opacity: ${({ removed }) => removed ? 0 : 1};
+    transition-delay: ${({ removed }) => removed ? '1.9s' : '0'};
     cursor: pointer;
     
     &:hover {
@@ -224,6 +225,8 @@ const PresentWrap = styled.div`
             transform: rotate(0deg);
         }
     }
+    
+    
 `;
 
 export default ReactTimeout(Item);
