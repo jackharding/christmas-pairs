@@ -132,12 +132,17 @@ class Item extends Component {
         }
     }
 
+    clickItem = (item) => {
+        if(this.state.opening || this.state.closing) return
+
+        this.props.onClick(item);
+    }
+
     render() {
         let {
             Component,
             onClick
         } = this.props;
-        console.log(this.props.uid, this.state.open, this.state.opening)
 
         return(
             <Fragment>
@@ -148,7 +153,7 @@ class Item extends Component {
                     opening={this.state.opening}
                     closing={this.state.closing}
                 >
-                    <Present onClick={onClick} />
+                    <Present onClick={this.clickItem} />
 
                     <div
                         className="present-item"

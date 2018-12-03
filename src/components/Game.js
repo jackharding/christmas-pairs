@@ -19,7 +19,7 @@ const gifts = [
         component: CandyCane
     },
     {
-        value: 'gingerbread-man',
+        value: 'gingerbreadMan',
         component: GingerbreadMan
     },
     // {
@@ -46,7 +46,7 @@ const gifts = [
     //     value: 'snowman',
     //     component: Snowman
     // },
-];
+]
 
 const makeGameItems = (items, hard) => {
     items = items.map(item => ({
@@ -81,13 +81,20 @@ const makeGameItems = (items, hard) => {
         });
     }
 
-    // return _.shuffle(items);
-    return items;
+    items = _.shuffle(items);
+
+    let obj = {};
+
+    items.forEach(item => {
+        obj[item.uid] = item;
+    });
+
+    return obj;
 }
 
 class Game extends Component {
     state = {
-        items: [],
+        items: {},
         guesses: [],
         remaining: 0
     }
@@ -102,7 +109,7 @@ class Game extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         if(this.state.guesses.length !== prevState.guesses.length && this.state.guesses.length > 1) {
-            this.checkForMatch(this.state.guesses);
+            this.checkForMatches(this.state.guesses);
         }
 
         if(this.state.remaining < 1) {
@@ -111,8 +118,8 @@ class Game extends Component {
     }
 
     setItems = (reset) => {
-        console.log('hard?', this.props.hard)
         const items = reset ? [] : makeGameItems(gifts, this.props.hard);
+        // console.log(items);
 
         this.setState({
             items,
@@ -120,35 +127,20 @@ class Game extends Component {
         });
     }
 
-    checkForMatch = (guesses) => {
-        let items;
+    checkForMatches = (guesses) => {
+        let items = { ...this.state.items };
 
+        console.log(guesses[0] === guesses[1], guesses, items[guesses[0]], items[guesses[1]])
         // If the first/second items are a match, set removed key to true
         if(guesses[0] === guesses[1]) {
-            items = this.state.items.map(item => {
-                let obj = {
-                    ...item
-                }
 
-                if(item.value === guesses[0]) {
-                    obj.removed = true;
-                }
+            items[guesses[0]].removed = true;
+            items[guesses[0] + 'pair'].removed = true;
 
-                return obj;
-            })
         } else {
             // Set the incorrect guesses to be inactive again
-            items = this.state.items.map(item => {
-                let obj = {
-                    ...item
-                }
-
-                if(item.value === guesses[0] || item.value === guesses[1]) {
-                    obj.active = false;
-                }
-
-                return obj;
-            })
+            items[guesses[0]].active = false;
+            items[guesses[1]].active = false;
         }
 
         this.setState(prev => ({
@@ -160,8 +152,8 @@ class Game extends Component {
 
     turnItem = (guess) => {
         if(guess.active) return;
+        console.log('turning', guess.uid);
 
-        console.log(guess)
         let { hard } = this.props;
 
         let value = guess.value;
@@ -169,24 +161,28 @@ class Game extends Component {
             value = guess.controls.value;
         }
 
+        let items = { ...this.state.items };
+        items[guess.uid].active = true;
+
         // Set active key to true and add guess to end of guesses array
         this.setState({
-            items: this.state.items.map(item => {
-                let obj = {
-                    ...item
-                }
-
-                let matchesGuess = guess.uid === item.uid;
-                if(hard) {
-                    matchesGuess = guess.controls.uid === item.uid;
-                }
-
-                if(matchesGuess) {
-                    obj.active = true;
-                }
-
-                return obj;
-            }),
+            // items: this.state.items.map(item => {
+            //     let obj = {
+            //         ...item
+            //     }
+            //
+            //     let matchesGuess = guess.uid === item.uid;
+            //     if(hard) {
+            //         matchesGuess = guess.controls.uid === item.uid;
+            //     }
+            //
+            //     if(matchesGuess) {
+            //         obj.active = true;
+            //     }
+            //
+            //     return obj;
+            // }),
+            items,
             guesses: [...this.state.guesses, value]
         });
     }
@@ -194,12 +190,12 @@ class Game extends Component {
     render() {
         return(
             <Board>
-                { this.state.items.map(item => {
+                { Object.entries(this.state.items).map(item => {
                     return(
                         <Item
-                            {...item}
-                            onClick={() => this.turnItem(item)}
-                            key={item.uid}
+                            {...item[1]}
+                            onClick={() => this.turnItem(item[1])}
+                            key={item[1].uid}
                         />
                     );
                 }) }
