@@ -133,16 +133,13 @@ class Item extends Component {
     }
 
     clickItem = (item) => {
-        if(this.state.opening || this.state.closing) return
+        if(this.state.opening || this.state.closing) return;
 
         this.props.onClick(item);
     }
 
     render() {
-        let {
-            Component,
-            onClick
-        } = this.props;
+        let { Component } = this.props;
 
         return(
             <Fragment>

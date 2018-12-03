@@ -13,6 +13,20 @@ import Snowflake from './Snowflake';
 import Snowman from './Snowman';
 import Tree from './Tree';
 
+function chunkArray(myArray, chunk_size){
+    var index = 0;
+    var arrayLength = myArray.length;
+    var tempArray = [];
+
+    for (index = 0; index < arrayLength; index += chunk_size) {
+        let myChunk = myArray.slice(index, index+chunk_size);
+        // Do something if you want with the group
+        tempArray.push(myChunk);
+    }
+
+    return tempArray;
+}
+
 const gifts = [
     {
         value: 'candyCane',
@@ -128,31 +142,39 @@ class Game extends Component {
     }
 
     checkForMatches = (guesses) => {
-        let items = { ...this.state.items };
+        let matches = 0,
+            items = { ...this.state.items };
 
-        console.log(guesses[0] === guesses[1], guesses, items[guesses[0]], items[guesses[1]])
-        // If the first/second items are a match, set removed key to true
-        if(guesses[0] === guesses[1]) {
+        let guessChunks = chunkArray(guesses, 2);
 
-            items[guesses[0]].removed = true;
-            items[guesses[0] + 'pair'].removed = true;
+        guessChunks.forEach(gr => {
+            // If the first/second items are a match, set removed key to true
+            if(gr[0] === gr[1]) {
 
-        } else {
-            // Set the incorrect guesses to be inactive again
-            items[guesses[0]].active = false;
-            items[guesses[1]].active = false;
-        }
+                items[gr[0]].removed = true;
+                items[gr[0] + 'pair'].removed = true;
+                matches++;
+
+            } else {
+                // Set the incorrect guesses to be inactive again
+                Object.entries(items).forEach(item => {
+                    items[item[0]].active = false
+                });
+            }
+        });
+
+        guesses = guessChunks.filter(chunk => chunk.length < 2);
+        guesses = guesses.length ? guesses[0] : [];
 
         this.setState(prev => ({
             items,
-            guesses: [...guesses].slice(2, guesses.length),
-            remaining: guesses[0] === guesses[1] ? prev.remaining - 1 : prev.remaining
+            guesses,
+            remaining: matches ? prev.remaining - matches : prev.remaining
         }));
     }
 
     turnItem = (guess) => {
         if(guess.active) return;
-        console.log('turning', guess.uid);
 
         let { hard } = this.props;
 
@@ -162,7 +184,12 @@ class Game extends Component {
         }
 
         let items = { ...this.state.items };
-        items[guess.uid].active = true;
+
+        if(hard) {
+            items[guess.controls.uid].active = true;
+        } else {
+            items[guess.uid].active = true;
+        }
 
         // Set active key to true and add guess to end of guesses array
         this.setState({
@@ -195,6 +222,7 @@ class Game extends Component {
                         <Item
                             {...item[1]}
                             onClick={() => this.turnItem(item[1])}
+                            hard={this.props.hard}
                             key={item[1].uid}
                         />
                     );

@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5f642495-aaa3-4b79-9aef-acd0bfc10f2b" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Game.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Game.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Item.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Item.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -22,11 +20,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Item.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Item.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/Item.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="701">
-              <caret line="137" column="33" selection-start-line="137" selection-start-column="33" selection-end-line="137" selection-end-column="33" />
+            <state>
+              <caret line="127" column="73" lean-forward="true" selection-start-line="127" selection-start-column="73" selection-end-line="127" selection-end-column="73" />
               <folding>
                 <element signature="e#0#51#0" expanded="true" />
               </folding>
@@ -88,11 +86,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Game.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Game.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/Game.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="718">
-              <caret line="194" column="27" lean-forward="true" selection-start-line="194" selection-start-column="27" selection-end-line="194" selection-end-column="27" />
+            <state relative-caret-position="554">
+              <caret line="220" column="27" lean-forward="true" selection-start-line="220" selection-start-column="27" selection-end-line="220" selection-end-column="27" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
@@ -128,8 +126,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>.log(</find>
-      <find>animateItem</find>
       <find>setTime</find>
       <find>2000</find>
       <find>Diffi</find>
@@ -158,6 +154,8 @@
       <find>map</find>
       <find>active = fal</find>
       <find>.log</find>
+      <find>checkFor</find>
+      <find>chunkArra</find>
     </findStrings>
     <replaceStrings>
       <replace>obj</replace>
@@ -203,8 +201,8 @@
         <option value="$PROJECT_DIR$/src/App.js" />
         <option value="$PROJECT_DIR$/src/components/TopBar.js" />
         <option value="$PROJECT_DIR$/src/components/Timer.js" />
-        <option value="$PROJECT_DIR$/src/components/Game.js" />
         <option value="$PROJECT_DIR$/src/components/Item.js" />
+        <option value="$PROJECT_DIR$/src/components/Game.js" />
       </list>
     </option>
   </component>
@@ -339,12 +337,12 @@
       <workItem from="1543502044216" duration="813000" />
       <workItem from="1543562179678" duration="15273000" />
       <workItem from="1543831863622" duration="62000" />
-      <workItem from="1543838319181" duration="1736000" />
+      <workItem from="1543838319181" duration="3087000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="44369000" />
+    <option name="totallyTimeSpent" value="45720000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1080" extended-state="0" />
@@ -806,22 +804,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Game.js">
+    <entry file="file://$PROJECT_DIR$/src/components/Item.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="718">
-          <caret line="194" column="27" lean-forward="true" selection-start-line="194" selection-start-column="27" selection-end-line="194" selection-end-column="27" />
+        <state>
+          <caret line="127" column="73" lean-forward="true" selection-start-line="127" selection-start-column="73" selection-end-line="127" selection-end-column="73" />
           <folding>
-            <element signature="e#0#41#0" expanded="true" />
+            <element signature="e#0#51#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Item.js">
+    <entry file="file://$PROJECT_DIR$/src/components/Game.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="701">
-          <caret line="137" column="33" selection-start-line="137" selection-start-column="33" selection-end-line="137" selection-end-column="33" />
+        <state relative-caret-position="554">
+          <caret line="220" column="27" lean-forward="true" selection-start-line="220" selection-start-column="27" selection-end-line="220" selection-end-column="27" />
           <folding>
-            <element signature="e#0#51#0" expanded="true" />
+            <element signature="e#0#41#0" expanded="true" />
           </folding>
         </state>
       </provider>
