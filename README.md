@@ -1,5 +1,5 @@
 
-# Xmas Pairs
+# Christmas Pairs
 
 A festive memory game built with React.
 
