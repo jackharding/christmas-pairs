@@ -23,7 +23,9 @@ class Item extends Component {
         });
         this.itemTimeline = new TimelineLite({
             paused: true,
-            onComplete: () => this.setState({ animateItem: true })
+            onComplete: () => {
+                this.setState({ animateItem: true });
+            }
         });
 
         this.state = {
@@ -119,7 +121,6 @@ class Item extends Component {
 
     openPresent = (uid, reverse) => {
         this.setState(prev => ({
-            animateItem: !prev.animateItem,
             open: !prev.open,
         }));
 

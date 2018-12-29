@@ -27,14 +27,14 @@ class App extends Component {
         });
     }
 
-    stopGame = (finalTime) => {
+    stopGame = (finalTime = null) => {
         this.setState({
             playing: false,
             finalTime,
         });
     }
 
-    completeGame = (remaining) => {
+    completeGame = () => {
         this.setState({
             completed: true
         });
@@ -75,6 +75,7 @@ class App extends Component {
                         onDifficultyChange={this.changeDifficulty}
                         hard={hard}
                         finalTime={finalTime}
+                        completed={completed}
                     />
                 }
 

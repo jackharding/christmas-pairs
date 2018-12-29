@@ -3,9 +3,9 @@ import styled from 'styled-components';
 
 // import DifficultySwitch from './DifficultySwitch';
 
-export default ({ onStart, onDifficultyChange, hard, finalTime }) => (
+export default ({ onStart, onDifficultyChange, hard, finalTime, completed }) => (
     <StartScreen>
-        { finalTime && <Score>You finished in { finalTime }</Score> }
+        { finalTime && completed && <Score>You finished in { finalTime }</Score> }
         <h1>Xmas Pairs</h1>
 
         <Controls>

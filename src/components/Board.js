@@ -6,6 +6,7 @@ export default styled.div`
     grid-gap: 20px;
     max-width: 760px;
     margin: 0 auto;
+    padding-bottom: 100px;
     
     >div {
         z-index: 1;

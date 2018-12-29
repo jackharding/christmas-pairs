@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TimelineMax } from "gsap/TweenMax";
+import { TimelineMax, Power0 } from "gsap/TweenMax";
 
 import { ReactComponent as CandyCane } from '../svg/candy-cane.svg';
 
@@ -16,48 +16,34 @@ class CandyCaneWrap extends Component {
 
     componentDidUpdate() {
         if(this.props.animate && !this.state.animating) {
-            // this.wave();
+            this.animate();
         }
     }
 
-    wave = () => {
-        let leftArm = this.candyCane.current.querySelector('#left-arm'),
-            rightArm = this.candyCane.current.querySelector('#right-arm');
+    animate = () => {
+        this.setState({
+            animating: true
+        });
+
+        let svg = this.candyCane.current.querySelector('svg');
 
         const t1 = new TimelineMax({
             repeat: -1,
-        });
-        const t2 = new TimelineMax({
-            repeat: -1
+            repeatDelay: 2,
         });
 
-        t1.set(rightArm, {
-            rotation: 4,
-            transformOrigin: 'right bottom'
+        t1.to(svg, .1, {
+            rotation: 10,
+            ease: Power0.easeNone,
         })
-            .to(rightArm, .5, {
-                rotation: 4,
-            })
-            .to(rightArm, .5, {
-                rotation: -4,
-            })
-            .to(rightArm, .5, {
-                rotation: 4,
-            });
-
-        t2.set(leftArm, {
-            rotation: 4,
-            transformOrigin: 'left bottom'
+        .to(svg, .2, {
+            rotation: -10,
+            ease: Power0.easeNone,
         })
-            .to(leftArm, .5, {
-                rotation: 4,
-            })
-            .to(leftArm, .5, {
-                rotation: -4,
-            })
-            .to(leftArm, .5, {
-                rotation: 4,
-            });
+        .to(svg, .1, {
+            rotation: 0,
+            ease: Power0.easeNone,
+        })
     }
 
     render() {

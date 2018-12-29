@@ -13,7 +13,8 @@ class TopBar extends Component {
         time: {
             minutes: 0,
             seconds: 0,
-        }
+        },
+        completeTimeout: null,
     }
 
     componentDidMount() {
@@ -22,17 +23,17 @@ class TopBar extends Component {
 
     componentWillUnmount() {
         this.props.clearInterval(this.state.timer);
+        this.props.clearInterval(this.state.completeTimeout);
     }
 
     componentDidUpdate(prevProps) {
         if(!prevProps.completed && this.props.completed) {
             this.setState({
-                timer: null
+                timer: null,
+                completeTimeout: this.props.setTimeout(() => {
+                    this.props.onStop(this.state.time.minutes + ':' + padSeconds(this.state.time.seconds));
+                }, 1500)
             });
-
-            this.props.setTimeout(() => {
-                this.props.onStop(this.state.time.minutes + ':' + padSeconds(this.state.time.seconds));
-            }, 1500);
         }
     }
 

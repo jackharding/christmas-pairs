@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TimelineMax } from "gsap/TweenMax";
+import { TweenMax } from "gsap/TweenMax";
 
 import { ReactComponent as GingerbreadMan } from '../svg/gingerbread-man.svg';
 
@@ -16,48 +16,32 @@ class GingerbreadManWrap extends Component {
 
     componentDidUpdate() {
         if(this.props.animate && !this.state.animating) {
-            // this.wave();
+            this.animate();
         }
     }
 
-    wave = () => {
-        let leftArm = this.gingerbreadMan.current.querySelector('#left-arm'),
-            rightArm = this.gingerbreadMan.current.querySelector('#right-arm');
+    animate = () => {
+        this.setState({
+            animating: true
+        });
 
-        const t1 = new TimelineMax({
+        let svg = this.gingerbreadMan.current.querySelector('svg');
+
+        TweenMax.fromTo(svg, .3, {
+            y: '0%',
+        }, {
+            y: '-10%',
             repeat: -1,
+            yoyo: true,
         });
-        const t2 = new TimelineMax({
+
+        TweenMax.fromTo(svg, .6, {
+            rotation: 10
+        }, {
+            rotation: -10,
+            yoyo: true,
             repeat: -1
-        });
-
-        t1.set(rightArm, {
-            rotation: 4,
-            transformOrigin: 'right bottom'
         })
-            .to(rightArm, .5, {
-                rotation: 4,
-            })
-            .to(rightArm, .5, {
-                rotation: -4,
-            })
-            .to(rightArm, .5, {
-                rotation: 4,
-            });
-
-        t2.set(leftArm, {
-            rotation: 4,
-            transformOrigin: 'left bottom'
-        })
-            .to(leftArm, .5, {
-                rotation: 4,
-            })
-            .to(leftArm, .5, {
-                rotation: -4,
-            })
-            .to(leftArm, .5, {
-                rotation: 4,
-            });
     }
 
     render() {

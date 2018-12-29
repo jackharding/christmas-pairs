@@ -36,14 +36,14 @@ class MistletoeWrap extends Component {
             rotation: 10,
             ease: Power0.easeNone,
         })
-            .to(svg, .2, {
-                rotation: -10,
-                ease: Power0.easeNone,
-            })
-            .to(svg, .1, {
-                rotation: 0,
-                ease: Power0.easeNone,
-            })
+        .to(svg, .2, {
+            rotation: -10,
+            ease: Power0.easeNone,
+        })
+        .to(svg, .1, {
+            rotation: 0,
+            ease: Power0.easeNone,
+        })
     }
 
     render() {
